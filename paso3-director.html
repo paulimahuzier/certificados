@@ -15,7 +15,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 .card-body{padding:1.5rem 2rem}
 .step-badge{display:inline-flex;align-items:center;gap:6px;background:#E1F5EE;color:#0F6E56;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:1.25rem}
 .section-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888780;margin-bottom:.75rem;padding-bottom:.35rem;border-bottom:1px solid #f0efe8}
-
+ 
 /* Certificado preview */
 .cert-preview{background:#fff;border:1px solid #d3d1c7;border-radius:10px;padding:1.75rem;margin-bottom:1.5rem;font-size:13.5px;line-height:1.8;color:#1a1a18}
 .cert-header{text-align:center;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid #f0efe8}
@@ -30,18 +30,13 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 .sig-name{font-size:12px;font-weight:600;color:#1a1a18;text-align:center}
 .sig-role{font-size:11px;color:#73726c;text-align:center;line-height:1.4}
 .cert-date{font-size:12px;color:#73726c;margin-top:1rem}
-
-/* Logo upload */
-.logo-upload{margin-bottom:1.5rem}
-.logo-drop{border:1.5px dashed #d3d1c7;border-radius:8px;padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
-.logo-drop:hover,.logo-drop.dragover{border-color:#1D9E75;background:#f0fdf8}
-.logo-drop p{font-size:13px;color:#73726c;margin-bottom:.25rem}
-.logo-drop span{font-size:11px;color:#b4b2a9}
-.logo-preview{display:none;align-items:center;gap:10px;margin-top:.75rem}
-.logo-preview img{height:36px;object-fit:contain;border:1px solid #e2e1da;border-radius:6px;padding:4px 8px;background:#fff}
-.logo-preview button{font-size:11px;color:#888780;background:none;border:none;cursor:pointer;text-decoration:underline}
-#logo-input{display:none}
-
+ 
+/* Sellos */
+.sellos-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;align-items:center}
+.sello-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.sello-label{font-size:11px;color:#888780;text-align:center}
+.sello-wrap svg{max-width:100%;height:auto}
+ 
 /* Firma director */
 .sig-section{margin-bottom:1.25rem}
 .sig-label{font-size:12px;font-weight:500;color:#5f5e5a;margin-bottom:.5rem}
@@ -51,7 +46,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 .sig-clear{font-size:11px;color:#888780;background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:4px}
 .firmante-id{margin-top:.5rem;font-size:12px;color:#73726c}
 .firmante-id strong{color:#1a1a18;font-weight:500}
-
+ 
 .card-footer{padding:1.25rem 2rem;border-top:1px solid #f0efe8;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .note{font-size:12px;color:#888780}
 .btn{height:42px;padding:0 24px;border-radius:8px;font-size:14px;font-family:inherit;font-weight:600;cursor:pointer;transition:all .15s;border:none}
@@ -71,7 +66,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 </head>
 <body>
 <div class="card">
-
+ 
   <div id="state-form" class="state active">
     <div class="card-header">
       <p class="institution">UANDES School of Business and Economics</p>
@@ -83,15 +78,15 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         Paso 3 de 3 — Firma Director
       </div>
-
+ 
       <div id="error-banner" class="banner">No fue posible finalizar. Intenta nuevamente.</div>
-
+ 
       <!-- Vista previa del certificado completo -->
       <div class="section-label">Certificado a firmar</div>
       <div class="cert-preview">
         <div class="cert-header">
-          <div class="cert-title">Certificate of Language Proficiency</div>
-          <div class="cert-sub">International Student Exchange Program — Universidad de los Andes</div>
+          <div class="cert-title">Certificate of Language Proficiency to apply for</div>
+          <div class="cert-sub">International Student Exchange Program of Universidad de los Andes</div>
         </div>
         <div class="cert-body">
           I hereby certify that <strong id="p-nombre">—</strong>
@@ -103,40 +98,65 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
         </div>
         <div class="cert-sigs">
           <div class="sig-block">
-            <div class="sig-img-wrap" id="sig-profesora-wrap">
-              <!-- Firma profesora se carga aquí -->
-            </div>
+            <div class="sig-img-wrap" id="sig-profesora-wrap"></div>
             <div class="sig-name">Marcela Addison-Smith</div>
             <div class="sig-role">Business English Professor<br>UANDES School of Business and Economics</div>
           </div>
           <div class="sig-block">
-            <div class="sig-img-wrap empty" id="sig-director-preview">
-              <!-- Firma director aparece aquí al dibujar -->
-            </div>
+            <div class="sig-img-wrap empty" id="sig-director-preview"></div>
             <div class="sig-name">André Bergoeing Reid</div>
             <div class="sig-role">Director International Business<br>UANDES School of Business and Economics</div>
           </div>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;align-items:center">
+          <div style="display:flex;justify-content:center">
+            <svg viewBox="0 0 220 220" width="90" height="90" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="110" cy="110" r="100" fill="none" stroke="#1a1a18" stroke-width="1.2"/>
+              <circle cx="110" cy="110" r="78" fill="none" stroke="#1a1a18" stroke-width="1"/>
+              <path id="cp" fill="none" d="M110,110 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/>
+              <text font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#1a1a18" letter-spacing="1.8">
+                <textPath href="#cp" startOffset="2%">CIENCIAS ECONÓMICAS Y EMPRESARIALES, UNIVERSIDAD DE LOS ANDES, SANTIAGO, CHILE FACULTAD DE</textPath>
+              </text>
+            </svg>
+          </div>
+          <div style="display:flex;justify-content:center">
+            <svg viewBox="0 0 280 110" width="180" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="276" height="106" fill="none" stroke="#1a1a18" stroke-width="1.2"/>
+              <text x="140" y="38" font-family="'Segoe UI',sans-serif" font-size="16" font-weight="700" fill="#1a1a18" text-anchor="middle">André Bergoeing R.</text>
+              <text x="140" y="60" font-family="'Segoe UI',sans-serif" font-size="13" fill="#1a1a18" text-anchor="middle">Director International Business</text>
+              <text x="140" y="80" font-family="'Segoe UI',sans-serif" font-size="13" fill="#1a1a18" text-anchor="middle">Universidad de los Andes</text>
+            </svg>
+          </div>
+        </div>
         <div class="cert-date" id="cert-date"></div>
       </div>
-
-      <!-- Logo institucional -->
-      <div class="logo-upload">
-        <div class="section-label">Logo institucional (opcional)</div>
-        <div class="logo-drop" id="logo-drop" onclick="document.getElementById('logo-input').click()"
-          ondragover="event.preventDefault();this.classList.add('dragover')"
-          ondragleave="this.classList.remove('dragover')"
-          ondrop="handleDrop(event)">
-          <p>Arrastra el logo aquí o haz clic para seleccionar</p>
-          <span>PNG, JPG · recomendado 300×80 px</span>
+ 
+      <!-- Sellos institucionales -->
+      <div class="sellos-row">
+        <div class="sello-wrap">
+          <!-- Timbre circular Facultad -->
+          <svg id="svg-timbre" viewBox="0 0 220 220" width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="110" cy="110" r="100" fill="none" stroke="#1a1a18" stroke-width="1.2"/>
+            <circle cx="110" cy="110" r="78" fill="none" stroke="#1a1a18" stroke-width="1"/>
+            <path id="timbre-path" fill="none" d="M110,110 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/>
+            <text font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#1a1a18" letter-spacing="1.8">
+              <textPath href="#timbre-path" startOffset="2%">CIENCIAS ECONÓMICAS Y EMPRESARIALES, UNIVERSIDAD DE LOS ANDES, SANTIAGO, CHILE FACULTAD DE</textPath>
+            </text>
+          </svg>
+          <span class="sello-label">Timbre institucional</span>
         </div>
-        <input type="file" id="logo-input" accept="image/*" onchange="handleLogoFile(this.files[0])">
-        <div class="logo-preview" id="logo-preview">
-          <img id="logo-img" src="" alt="Logo">
-          <button onclick="removeLogo()">quitar</button>
+        <div class="sello-wrap">
+          <!-- Sello rectangular André Bergoeing -->
+          <svg id="svg-sello" viewBox="0 0 280 110" width="220" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="276" height="106" fill="none" stroke="#1a1a18" stroke-width="1.2"/>
+            <text x="140" y="38" font-family="'Segoe UI',sans-serif" font-size="16" font-weight="700" fill="#1a1a18" text-anchor="middle">André Bergoeing R.</text>
+            <text x="140" y="60" font-family="'Segoe UI',sans-serif" font-size="13" fill="#1a1a18" text-anchor="middle">Director International Business</text>
+            <text x="140" y="80" font-family="'Segoe UI',sans-serif" font-size="13" fill="#1a1a18" text-anchor="middle">Universidad de los Andes</text>
+          </svg>
+          <span class="sello-label">Sello del Director</span>
         </div>
       </div>
-
+ 
       <!-- Firma del director -->
       <div class="sig-section">
         <div class="section-label">Firma digital</div>
@@ -146,8 +166,10 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
           <div class="sig-placeholder" id="sig-placeholder">Dibuja tu firma</div>
         </div>
         <button class="sig-clear" onclick="clearSig()">borrar</button>
-        <div class="firmante-id">
-          <strong>André Bergoeing Reid</strong> · Director International Business
+        <div style="margin-top:.75rem;text-align:center;border-top:1px solid #d3d1c7;padding-top:.6rem">
+          <div style="font-size:13px;font-weight:700;letter-spacing:.04em;color:#1a1a18;text-transform:uppercase">André Bergoeing R.</div>
+          <div style="font-size:12px;color:#73726c;margin-top:2px">Director International Business</div>
+          <div style="font-size:12px;color:#73726c">Universidad de los Andes</div>
         </div>
       </div>
     </div>
@@ -156,7 +178,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       <button class="btn btn-primary" onclick="enviar()">Aprobar y finalizar →</button>
     </div>
   </div>
-
+ 
   <div id="state-loading" class="state">
     <div class="success-wrap">
       <div class="check-icon" style="background:#E1F5EE">⏳</div>
@@ -164,7 +186,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       <p>Guardando en SharePoint.</p>
     </div>
   </div>
-
+ 
   <div id="state-ok" class="state">
     <div class="success-wrap">
       <div class="check-icon" style="background:#EAF3DE">✓</div>
@@ -176,24 +198,25 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       </a>
     </div>
   </div>
-
+ 
 </div>
 <script>
 // ── CONFIGURAR ──────────────────────────────────────────────────────────────
-const PA_URL_PASO3 = 'REEMPLAZAR_CON_URL_POWER_AUTOMATE_PASO3';
+const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5f41959401d54e7ba516c30ffaece0cc/triggers/manual/paths/invoke?api-version=1';
 // ───────────────────────────────────────────────────────────────────────────
-
+ 
 // Leer datos desde query string (enviados por Power Automate en el link)
 const params = new URLSearchParams(window.location.search);
 const nombreCompleto = params.get('nombre') || '—';
 const cefr = params.get('cefr') || '—';
 const firmaProfesora = params.get('firma') || '';
-
+const emailEstudiante = params.get('email') || '';
+ 
 document.getElementById('p-nombre').textContent = nombreCompleto;
 document.getElementById('p-cefr').textContent = cefr;
 document.getElementById('cert-date').textContent =
   'Date: ' + new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
-
+ 
 if(firmaProfesora){
   const img = document.createElement('img');
   img.src = firmaProfesora;
@@ -202,39 +225,13 @@ if(firmaProfesora){
   img.style.objectFit = 'contain';
   document.getElementById('sig-profesora-wrap').appendChild(img);
 }
-
-// Logo
-let logoData = null;
-function handleLogoFile(file){
-  if(!file)return;
-  const r = new FileReader();
-  r.onload = e => {
-    logoData = e.target.result;
-    document.getElementById('logo-img').src = logoData;
-    document.getElementById('logo-preview').style.display = 'flex';
-    document.getElementById('logo-drop').style.display = 'none';
-  };
-  r.readAsDataURL(file);
-}
-function handleDrop(e){
-  e.preventDefault();
-  document.getElementById('logo-drop').classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if(file && file.type.startsWith('image/')) handleLogoFile(file);
-}
-function removeLogo(){
-  logoData = null;
-  document.getElementById('logo-img').src = '';
-  document.getElementById('logo-preview').style.display = 'none';
-  document.getElementById('logo-drop').style.display = 'block';
-}
-
+ 
 // Canvas firma director
 const wrap = document.getElementById('sig-wrap');
 const canvas = document.getElementById('sig-canvas');
 const ctx = canvas.getContext('2d');
 let drawing=false, hasSig=false, lx=0, ly=0;
-
+ 
 function resizeCanvas(){
   canvas.width = wrap.offsetWidth;
   canvas.height = wrap.offsetHeight;
@@ -242,7 +239,7 @@ function resizeCanvas(){
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-
+ 
 function getPos(e){
   const r=canvas.getBoundingClientRect();
   const src=e.touches?e.touches[0]:e;
@@ -271,7 +268,7 @@ canvas.addEventListener('mouseleave',()=>drawing=false);
 canvas.addEventListener('touchstart',e=>{e.preventDefault();startDraw(e)},{passive:false});
 canvas.addEventListener('touchmove',e=>{e.preventDefault();moveDraw(e)},{passive:false});
 canvas.addEventListener('touchend',()=>drawing=false);
-
+ 
 function clearSig(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   hasSig=false;
@@ -280,114 +277,134 @@ function clearSig(){
   document.getElementById('sig-director-preview').innerHTML='';
   document.getElementById('sig-director-preview').classList.add('empty');
 }
-
+ 
 function showState(id){
   document.querySelectorAll('.state').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
+ 
 // Generar imagen del certificado para descarga
 function generarCertificado(){
-  const c=document.createElement('canvas');
-  c.width=900; c.height=600;
-  const x=c.getContext('2d');
-
-  // Fondo
-  x.fillStyle='#fff';
-  x.fillRect(0,0,c.width,c.height);
-  x.strokeStyle='#d3d1c7';
-  x.lineWidth=1;
-  x.strokeRect(20,20,860,560);
-
-  // Logo si existe
-  if(logoData){
-    const logo=new Image();
-    logo.src=logoData;
-    x.drawImage(logo,40,40,200,60);
-  }
-
-  // Encabezado
-  x.fillStyle='#888780';
-  x.font='11px Segoe UI';
-  x.textAlign='center';
-  x.fillText('UANDES SCHOOL OF BUSINESS AND ECONOMICS',450,60);
-
-  x.fillStyle='#1a1a18';
-  x.font='bold 20px Segoe UI';
-  x.fillText('Certificate of Language Proficiency',450,95);
-
-  x.fillStyle='#73726c';
-  x.font='13px Segoe UI';
-  x.fillText('International Student Exchange Program — Universidad de los Andes',450,118);
-
-  // Línea
-  x.strokeStyle='#e2e1da';x.lineWidth=1;
-  x.beginPath();x.moveTo(60,130);x.lineTo(840,130);x.stroke();
-
-  // Cuerpo
-  x.fillStyle='#1a1a18';
-  x.font='14px Segoe UI';
-  x.textAlign='left';
-  const lines=[
-    'I hereby certify that '+nombreCompleto+' has demonstrated an English Language',
-    'proficiency level of '+cefr+' under the Common European Framework of',
-    'Reference (CEFR).',
-    '',
-    'This certificate is for the exclusive purpose of being presented as part of the',
-    'documentation needed in connection with the above-mentioned student\'s',
-    'application to an international student exchange.'
-  ];
-  lines.forEach((l,i)=>x.fillText(l,60,170+i*22));
-
-  // Firmas
-  const sigY=390;
-  if(firmaProfesora){
-    const img=new Image();
-    img.src=firmaProfesora;
-    x.drawImage(img,60,sigY-60,200,55);
-  }
-  x.strokeStyle='#d3d1c7';x.lineWidth=1;
-  x.beginPath();x.moveTo(60,sigY);x.lineTo(260,sigY);x.stroke();
-  x.fillStyle='#1a1a18';x.font='bold 12px Segoe UI';
-  x.fillText('Marcela Addison-Smith',60,sigY+16);
-  x.fillStyle='#73726c';x.font='11px Segoe UI';
-  x.fillText('Business English Professor',60,sigY+32);
-  x.fillText('UANDES School of Business and Economics',60,sigY+46);
-
-  if(hasSig){
-    x.drawImage(canvas,520,sigY-60,220,55);
-  }
-  x.strokeStyle='#d3d1c7';
-  x.beginPath();x.moveTo(520,sigY);x.lineTo(840,sigY);x.stroke();
-  x.fillStyle='#1a1a18';x.font='bold 12px Segoe UI';
-  x.fillText('André Bergoeing Reid',520,sigY+16);
-  x.fillStyle='#73726c';x.font='11px Segoe UI';
-  x.fillText('Director International Business',520,sigY+32);
-  x.fillText('UANDES School of Business and Economics',520,sigY+46);
-
-  // Fecha
-  x.fillStyle='#73726c';x.font='12px Segoe UI';
-  x.fillText('Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),60,560);
-
-  return c.toDataURL('image/png');
+  return new Promise(resolve => {
+    const c=document.createElement('canvas');
+    c.width=900; c.height=640;
+    const x=c.getContext('2d');
+ 
+    // Fondo y borde
+    x.fillStyle='#fff';
+    x.fillRect(0,0,c.width,c.height);
+    x.strokeStyle='#d3d1c7';x.lineWidth=1;
+    x.strokeRect(20,20,860,600);
+ 
+    // Encabezado
+    x.fillStyle='#888780';
+    x.font='11px Segoe UI';
+    x.textAlign='center';
+    x.fillText('UANDES SCHOOL OF BUSINESS AND ECONOMICS',450,55);
+    x.fillStyle='#1a1a18';
+    x.font='bold 19px Segoe UI';
+    x.fillText('Certificate of Language Proficiency to apply for',450,88);
+    x.fillStyle='#73726c';
+    x.font='13px Segoe UI';
+    x.fillText('International Student Exchange Program of Universidad de los Andes',450,110);
+ 
+    // Línea separadora
+    x.strokeStyle='#e2e1da';x.lineWidth=1;
+    x.beginPath();x.moveTo(60,122);x.lineTo(840,122);x.stroke();
+ 
+    // Cuerpo
+    x.fillStyle='#1a1a18';x.font='14px Segoe UI';x.textAlign='left';
+    const lines=[
+      'I hereby certify that '+nombreCompleto+' has demonstrated an English Language',
+      'proficiency level of '+cefr+' under the Common European Framework of Reference (CEFR).',
+      '',
+      'This certificate is for the exclusive purpose of being presented as part of the',
+      'documentation needed in connection with the above-mentioned student\'s application',
+      'to an international student exchange.'
+    ];
+    lines.forEach((l,i)=>x.fillText(l,60,158+i*22));
+ 
+    // Firmas
+    const sigY=360;
+    if(firmaProfesora){
+      const img=new Image();img.src=firmaProfesora;
+      x.drawImage(img,60,sigY-55,190,50);
+    }
+    x.strokeStyle='#d3d1c7';x.lineWidth=1;
+    x.beginPath();x.moveTo(60,sigY);x.lineTo(270,sigY);x.stroke();
+    x.fillStyle='#1a1a18';x.font='bold 12px Segoe UI';
+    x.fillText('Marcela Addison-Smith',60,sigY+16);
+    x.fillStyle='#73726c';x.font='11px Segoe UI';
+    x.fillText('Business English Professor',60,sigY+30);
+    x.fillText('UANDES School of Business and Economics',60,sigY+43);
+ 
+    if(hasSig){x.drawImage(canvas,530,sigY-55,210,50);}
+    x.strokeStyle='#d3d1c7';
+    x.beginPath();x.moveTo(530,sigY);x.lineTo(840,sigY);x.stroke();
+    x.fillStyle='#1a1a18';x.font='bold 12px Segoe UI';
+    x.fillText('André Bergoeing Reid',530,sigY+16);
+    x.fillStyle='#73726c';x.font='11px Segoe UI';
+    x.fillText('Director International Business',530,sigY+30);
+    x.fillText('UANDES School of Business and Economics',530,sigY+43);
+ 
+    // Fecha
+    x.fillStyle='#73726c';x.font='12px Segoe UI';
+    x.fillText('Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),60,sigY+65);
+ 
+    // Dibujar sellos via SVG→imagen
+    const timbreSvg=document.getElementById('svg-timbre');
+    const selloSvg=document.getElementById('svg-sello');
+ 
+    function svgToImg(svgEl, w, h){
+      return new Promise(res=>{
+        const data='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(svgEl));
+        const img=new Image();img.onload=()=>res(img);img.src=data;
+      });
+    }
+ 
+    Promise.all([svgToImg(timbreSvg,130,130), svgToImg(selloSvg,220,85)]).then(([timbre,sello])=>{
+      // Timbre circular — bajo firma profesora
+      x.drawImage(timbre, 60, sigY+80, 110, 110);
+      // Sello rectangular — bajo firma director
+      x.drawImage(sello, 530, sigY+80, 220, 86);
+      resolve(c.toDataURL('image/jpeg', 0.92));
+    });
+  });
 }
-
+ 
 async function enviar(){
   document.getElementById('error-banner').classList.remove('show');
   if(!hasSig){alert('Por favor dibuja tu firma antes de finalizar.');return;}
-  const firmaDirector = canvas.toDataURL('image/png');
-  const certImg = generarCertificado();
+ 
+  // JPG compuesto director: firma + nombre + cargo
+  const comp = document.createElement('canvas');
+  comp.width = 400; comp.height = 160;
+  const cx = comp.getContext('2d');
+  cx.fillStyle = '#fff'; cx.fillRect(0,0,400,160);
+  cx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 50, 5, 300, 90);
+  cx.strokeStyle='#d3d1c7'; cx.lineWidth=1;
+  cx.beginPath(); cx.moveTo(40,98); cx.lineTo(360,98); cx.stroke();
+  cx.fillStyle='#1a1a18'; cx.font='bold 14px Segoe UI'; cx.textAlign='center';
+  cx.fillText('ANDRÉ BERGOEING R.', 200, 116);
+  cx.fillStyle='#73726c'; cx.font='12px Segoe UI';
+  cx.fillText('Director International Business', 200, 133);
+  cx.fillText('Universidad de los Andes', 200, 148);
+  const firmaDirectorJpg = comp.toDataURL('image/jpeg', 0.85);
+ 
   showState('state-loading');
   try{
-    const res=await fetch(PA_URL_PASO3,{
+    const certImg = await generarCertificado();
+    const res=await fetch(PA_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({
+        paso: 3,
         nombreCompleto, cefr,
-        firmaProfesora,
-        firmaDirector,
-        logoPng: logoData || null,
-        certificadoPng: certImg
+        emailEstudiante,
+        idSolicitud: params.get('id') || '',
+        firmaDirectorJpg,
+        certificadoJpg: certImg
       })
     });
     if(!res.ok)throw new Error('HTTP '+res.status);
