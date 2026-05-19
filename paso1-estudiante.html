@@ -166,12 +166,12 @@ async function enviar(){
   const email=document.getElementById('email').value.trim();
   showState('state-loading');
   try{
-    await fetch(PA_URL,{
+    const res=await fetch(PA_URL,{
       method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({paso:1, nombre,apellido,rut,email,nombreCompleto:nombre+' '+apellido})
     });
+    if(!res.ok)throw new Error('HTTP '+res.status);
     showState('state-ok');
   }catch(e){
     showState('state-form');
