@@ -1,3 +1,11 @@
+
+
+
+
+Claude es IA y puede cometer errores. Por favor, verifica nuevamente las respuestas.
+Paso2 profesora · HTML
+Copiar
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -53,7 +61,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 </head>
 <body>
 <div class="card">
-
+ 
   <div id="state-form" class="state active">
     <div class="card-header">
       <p class="institution">UANDES School of Business and Economics</p>
@@ -65,9 +73,9 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         Paso 2 de 3 — Firma Profesora
       </div>
-
+ 
       <div id="error-banner" class="banner">No fue posible enviar. Intenta nuevamente.</div>
-
+ 
       <!-- Datos del estudiante (leídos desde URL) -->
       <div class="estudiante-box">
         <div class="ava" id="ava-initials">??</div>
@@ -76,7 +84,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
           <span>Solicitante</span>
         </div>
       </div>
-
+ 
       <!-- Nivel CEFR -->
       <div class="section-label">Evaluación</div>
       <div class="field" id="f-cefr">
@@ -89,7 +97,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
         </select>
         <span class="err">Selecciona un nivel</span>
       </div>
-
+ 
       <!-- Vista previa -->
       <div class="preview-box">
         I hereby certify that <strong><span id="p-nombre" class="ph">NOMBRE</span></strong>
@@ -99,7 +107,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
         This certificate is for the exclusive purpose of being presented as part of the documentation
         needed in connection with the above-mentioned student's application to an international student exchange.
       </div>
-
+ 
       <!-- Firma -->
       <div class="sig-section">
         <div class="section-label">Firma digital</div>
@@ -120,7 +128,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       <button class="btn btn-primary" onclick="enviar()">Firmar y enviar →</button>
     </div>
   </div>
-
+ 
   <div id="state-loading" class="state">
     <div class="success-wrap">
       <div class="check-icon" style="background:#E6F1FB">⏳</div>
@@ -128,7 +136,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       <p>Notificando al Director.</p>
     </div>
   </div>
-
+ 
   <div id="state-ok" class="state">
     <div class="success-wrap">
       <div class="check-icon" style="background:#EAF3DE">✓</div>
@@ -136,13 +144,13 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
       <p>El certificado ha sido enviado a André Bergoeing Reid<br>para su firma y aprobación final.</p>
     </div>
   </div>
-
+ 
 </div>
 <script>
 // ── CONFIGURAR ──────────────────────────────────────────────────────────────
 const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5f41959401d54e7ba516c30ffaece0cc/triggers/manual/paths/invoke?api-version=1';
 // ───────────────────────────────────────────────────────────────────────────
-
+ 
 // Leer datos del estudiante desde query string
 const params = new URLSearchParams(window.location.search);
 const nombreCompleto = params.get('nombre') || 'Estudiante';
@@ -150,18 +158,18 @@ document.getElementById('nombre-display').textContent = nombreCompleto;
 document.getElementById('p-nombre').textContent = nombreCompleto;
 const initials = nombreCompleto.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
 document.getElementById('ava-initials').textContent = initials;
-
+ 
 function updatePreview(){
   const v = document.getElementById('cefr').value;
   document.getElementById('p-cefr').textContent = v || 'XX';
 }
-
+ 
 // Canvas de firma
 const wrap = document.getElementById('sig-wrap');
 const canvas = document.getElementById('sig-canvas');
 const ctx = canvas.getContext('2d');
 let drawing = false, hasSig = false, lx = 0, ly = 0;
-
+ 
 function resizeCanvas(){
   const data = canvas.toDataURL();
   canvas.width = wrap.offsetWidth;
@@ -173,7 +181,7 @@ function resizeCanvas(){
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-
+ 
 function getPos(e){
   const r = canvas.getBoundingClientRect();
   const src = e.touches ? e.touches[0] : e;
@@ -200,19 +208,19 @@ canvas.addEventListener('touchmove', e=>{
   wrap.classList.add('signed');
 },{passive:false});
 canvas.addEventListener('touchend', ()=>drawing=false);
-
+ 
 function clearSig(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   hasSig=false;
   document.getElementById('sig-placeholder').style.opacity='1';
   wrap.classList.remove('signed');
 }
-
+ 
 function showState(id){
   document.querySelectorAll('.state').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
+ 
 async function enviar(){
   document.getElementById('error-banner').classList.remove('show');
   let ok = true;
@@ -222,7 +230,7 @@ async function enviar(){
   else{fw.classList.remove('has-error');}
   if(!hasSig){alert('Por favor dibuja tu firma antes de enviar.');ok=false;}
   if(!ok)return;
-
+ 
   // Generar JPG compuesto: firma + nombre + cargo (igual al ejemplo)
   const comp = document.createElement('canvas');
   comp.width = 400;
@@ -245,13 +253,14 @@ async function enviar(){
   cx.font = '12px Segoe UI';
   cx.fillText('Business English Professor', 200, 133);
   cx.fillText('UANDES School of Business and Economics', 200, 148);
-
+ 
   const firma = comp.toDataURL('image/jpeg', 0.85);
   showState('state-loading');
   try{
     const res = await fetch(PA_URL, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
       body: JSON.stringify({
         paso: 2,
         nombreCompleto,
