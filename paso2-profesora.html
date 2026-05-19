@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firma Profesora — UANDES</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f4f4f1;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem}
+.card{background:#fff;border-radius:14px;border:1px solid #e2e1da;width:100%;max-width:520px;overflow:hidden}
+.card-header{padding:1.75rem 2rem 1.25rem;border-bottom:1px solid #f0efe8}
+.institution{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#888780;margin-bottom:.3rem}
+h1{font-size:16px;font-weight:600;color:#1a1a18}
+.subtitle{font-size:13px;color:#73726c;margin-top:.25rem}
+.card-body{padding:1.5rem 2rem}
+.step-badge{display:inline-flex;align-items:center;gap:6px;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:1.25rem}
+.estudiante-box{background:#f9f8f4;border:1px solid #e2e1da;border-radius:8px;padding:.85rem 1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+.ava{width:36px;height:36px;background:#B5D4F4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#0C447C;flex-shrink:0}
+.ava-info p{font-size:13px;font-weight:500;color:#1a1a18}
+.ava-info span{font-size:12px;color:#73726c}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888780;margin-bottom:.75rem;padding-bottom:.35rem;border-bottom:1px solid #f0efe8}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-size:12px;font-weight:500;color:#5f5e5a}
+.field select{height:42px;padding:0 13px;border:1px solid #d3d1c7;border-radius:8px;background:#fff;color:#1a1a18;font-size:14px;font-family:inherit;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888780' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.field select:focus{outline:none;border-color:#534AB7;box-shadow:0 0 0 3px rgba(83,74,183,.12)}
+.field select.error{border-color:#E24B4A}
+.err{font-size:11px;color:#A32D2D;display:none}
+.has-error .err{display:block}
+.preview-box{background:#f9f8f4;border:1px solid #e2e1da;border-radius:8px;padding:1rem 1.25rem;font-size:13px;line-height:1.75;color:#1a1a18;margin-bottom:1.25rem}
+.ph{display:inline-block;min-width:48px;border-bottom:1.5px solid #AFA9EC;color:#534AB7;font-weight:600;padding:0 3px;text-align:center}
+.sig-section{margin-bottom:1.25rem}
+.sig-label{font-size:12px;font-weight:500;color:#5f5e5a;margin-bottom:.5rem}
+.sig-wrap{position:relative;width:100%;height:110px;border:1px solid #d3d1c7;border-radius:8px;background:#fff;overflow:hidden;cursor:crosshair;touch-action:none}
+.sig-wrap.signed{border-color:#639922}
+.sig-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#b4b2a9;pointer-events:none;transition:opacity .2s}
+.sig-clear{font-size:11px;color:#888780;background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:4px;display:block}
+.firmante-id{margin-top:.5rem;font-size:12px;color:#73726c}
+.firmante-id strong{color:#1a1a18;font-weight:500}
+.card-footer{padding:1.25rem 2rem;border-top:1px solid #f0efe8;display:flex;justify-content:flex-end}
+.btn{height:42px;padding:0 24px;border-radius:8px;font-size:14px;font-family:inherit;font-weight:600;cursor:pointer;transition:all .15s;border:none}
+.btn-primary{background:#3C3489;color:#fff}
+.btn-primary:hover{background:#26215C}
+.btn-primary:active{transform:scale(.98)}
+.state{display:none}
+.state.active{display:block}
+.success-wrap{padding:2.5rem 2rem;text-align:center}
+.check-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px}
+.success-wrap h2{font-size:16px;font-weight:600;color:#1a1a18;margin-bottom:.4rem}
+.success-wrap p{font-size:13px;color:#73726c;line-height:1.6}
+.banner{background:#FCEBEB;border:1px solid #F7C1C1;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#791F1F;margin-bottom:1rem;display:none}
+.banner.show{display:block}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div id="state-form" class="state active">
+    <div class="card-header">
+      <p class="institution">UANDES School of Business and Economics</p>
+      <h1>Certificado de Idioma Inglés</h1>
+      <p class="subtitle">Revisión y firma — Business English</p>
+    </div>
+    <div class="card-body">
+      <div class="step-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Paso 2 de 3 — Firma Profesora
+      </div>
+
+      <div id="error-banner" class="banner">No fue posible enviar. Intenta nuevamente.</div>
+
+      <!-- Datos del estudiante (leídos desde URL) -->
+      <div class="estudiante-box">
+        <div class="ava" id="ava-initials">??</div>
+        <div class="ava-info">
+          <p id="nombre-display">Cargando…</p>
+          <span>Solicitante</span>
+        </div>
+      </div>
+
+      <!-- Nivel CEFR -->
+      <div class="section-label">Evaluación</div>
+      <div class="field" id="f-cefr">
+        <label for="cefr">Nivel CEFR certificado</label>
+        <select id="cefr" onchange="updatePreview()">
+          <option value="">Seleccionar nivel</option>
+          <option>A1</option><option>A2</option>
+          <option>B1</option><option>B2</option>
+          <option>C1</option><option>C2</option>
+        </select>
+        <span class="err">Selecciona un nivel</span>
+      </div>
+
+      <!-- Vista previa -->
+      <div class="preview-box">
+        I hereby certify that <strong><span id="p-nombre" class="ph">NOMBRE</span></strong>
+        has demonstrated an <strong>English Language proficiency level of
+        <span id="p-cefr" class="ph">XX</span></strong>
+        under the Common European Framework of Reference (CEFR).<br><br>
+        This certificate is for the exclusive purpose of being presented as part of the documentation
+        needed in connection with the above-mentioned student's application to an international student exchange.
+      </div>
+
+      <!-- Firma -->
+      <div class="sig-section">
+        <div class="section-label">Firma digital</div>
+        <div class="sig-label">Firma aquí</div>
+        <div class="sig-wrap" id="sig-wrap">
+          <canvas id="sig-canvas"></canvas>
+          <div class="sig-placeholder" id="sig-placeholder">Dibuja tu firma</div>
+        </div>
+        <button class="sig-clear" onclick="clearSig()">borrar</button>
+        <div style="margin-top:.75rem;text-align:center;border-top:1px solid #d3d1c7;padding-top:.6rem">
+          <div style="font-size:13px;font-weight:700;letter-spacing:.04em;color:#1a1a18;text-transform:uppercase">Marcela Addison-Smith</div>
+          <div style="font-size:12px;color:#73726c;margin-top:2px">Business English Professor</div>
+          <div style="font-size:12px;color:#73726c">UANDES School of Business and Economics</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" onclick="enviar()">Firmar y enviar →</button>
+    </div>
+  </div>
+
+  <div id="state-loading" class="state">
+    <div class="success-wrap">
+      <div class="check-icon" style="background:#E6F1FB">⏳</div>
+      <h2>Enviando…</h2>
+      <p>Notificando al Director.</p>
+    </div>
+  </div>
+
+  <div id="state-ok" class="state">
+    <div class="success-wrap">
+      <div class="check-icon" style="background:#EAF3DE">✓</div>
+      <h2>Firma registrada</h2>
+      <p>El certificado ha sido enviado a André Bergoeing Reid<br>para su firma y aprobación final.</p>
+    </div>
+  </div>
+
+</div>
+<script>
+// ── CONFIGURAR ──────────────────────────────────────────────────────────────
+const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5f41959401d54e7ba516c30ffaece0cc/triggers/manual/paths/invoke?api-version=1';
+// ───────────────────────────────────────────────────────────────────────────
+
+// Leer datos del estudiante desde query string
+const params = new URLSearchParams(window.location.search);
+const nombreCompleto = params.get('nombre') || 'Estudiante';
+document.getElementById('nombre-display').textContent = nombreCompleto;
+document.getElementById('p-nombre').textContent = nombreCompleto;
+const initials = nombreCompleto.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+document.getElementById('ava-initials').textContent = initials;
+
+function updatePreview(){
+  const v = document.getElementById('cefr').value;
+  document.getElementById('p-cefr').textContent = v || 'XX';
+}
+
+// Canvas de firma
+const wrap = document.getElementById('sig-wrap');
+const canvas = document.getElementById('sig-canvas');
+const ctx = canvas.getContext('2d');
+let drawing = false, hasSig = false, lx = 0, ly = 0;
+
+function resizeCanvas(){
+  const data = canvas.toDataURL();
+  canvas.width = wrap.offsetWidth;
+  canvas.height = wrap.offsetHeight;
+  ctx.strokeStyle = '#1a1a18';
+  ctx.lineWidth = 1.8;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e){
+  const r = canvas.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+canvas.addEventListener('mousedown', e=>{drawing=true;const p=getPos(e);lx=p.x;ly=p.y});
+canvas.addEventListener('mousemove', e=>{
+  if(!drawing)return;
+  const p=getPos(e);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();
+  lx=p.x;ly=p.y;hasSig=true;
+  document.getElementById('sig-placeholder').style.opacity='0';
+  wrap.classList.add('signed');
+});
+canvas.addEventListener('mouseup', ()=>drawing=false);
+canvas.addEventListener('mouseleave', ()=>drawing=false);
+canvas.addEventListener('touchstart', e=>{e.preventDefault();drawing=true;const p=getPos(e);lx=p.x;ly=p.y},{passive:false});
+canvas.addEventListener('touchmove', e=>{
+  e.preventDefault();if(!drawing)return;
+  const p=getPos(e);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();
+  lx=p.x;ly=p.y;hasSig=true;
+  document.getElementById('sig-placeholder').style.opacity='0';
+  wrap.classList.add('signed');
+},{passive:false});
+canvas.addEventListener('touchend', ()=>drawing=false);
+
+function clearSig(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  hasSig=false;
+  document.getElementById('sig-placeholder').style.opacity='1';
+  wrap.classList.remove('signed');
+}
+
+function showState(id){
+  document.querySelectorAll('.state').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+async function enviar(){
+  document.getElementById('error-banner').classList.remove('show');
+  let ok = true;
+  const cefr = document.getElementById('cefr').value;
+  const fw = document.getElementById('f-cefr');
+  if(!cefr){fw.classList.add('has-error');document.getElementById('cefr').classList.add('error');ok=false;}
+  else{fw.classList.remove('has-error');}
+  if(!hasSig){alert('Por favor dibuja tu firma antes de enviar.');ok=false;}
+  if(!ok)return;
+
+  // Generar JPG compuesto: firma + nombre + cargo (igual al ejemplo)
+  const comp = document.createElement('canvas');
+  comp.width = 400;
+  comp.height = 160;
+  const cx = comp.getContext('2d');
+  cx.fillStyle = '#fff';
+  cx.fillRect(0, 0, comp.width, comp.height);
+  // Dibujar firma centrada
+  cx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 50, 5, 300, 90);
+  // Línea bajo firma
+  cx.strokeStyle = '#d3d1c7'; cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(40, 98); cx.lineTo(360, 98); cx.stroke();
+  // Nombre en negrita mayúsculas
+  cx.fillStyle = '#1a1a18';
+  cx.font = 'bold 14px Segoe UI';
+  cx.textAlign = 'center';
+  cx.fillText('MARCELA ADDISON-SMITH', 200, 116);
+  // Cargo
+  cx.fillStyle = '#73726c';
+  cx.font = '12px Segoe UI';
+  cx.fillText('Business English Professor', 200, 133);
+  cx.fillText('UANDES School of Business and Economics', 200, 148);
+
+  const firma = comp.toDataURL('image/jpeg', 0.85);
+  showState('state-loading');
+  try{
+    const res = await fetch(PA_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        paso: 2,
+        nombreCompleto,
+        rut: params.get('rut') || '',
+        email: params.get('email') || '',
+        cefr,
+        firmaProfesoraJpg: firma
+      })
+    });
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    showState('state-ok');
+  }catch(e){
+    showState('state-form');
+    document.getElementById('error-banner').classList.add('show');
+  }
+}
+</script>
+</body>
+</html>
