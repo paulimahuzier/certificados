@@ -1,11 +1,3 @@
-
-
-
-
-Claude es IA y puede cometer errores. Por favor, verifica nuevamente las respuestas.
-Paso2 profesora · HTML
-Copiar
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -148,7 +140,7 @@ h1{font-size:16px;font-weight:600;color:#1a1a18}
 </div>
 <script>
 // ── CONFIGURAR ──────────────────────────────────────────────────────────────
-const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5f41959401d54e7ba516c30ffaece0cc/triggers/manual/paths/invoke?api-version=1';
+const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5ed7735b24e5449791109c3231cc1fbf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CCioK6zZcEqj9frIQpsd8zD04UJqXo6MXj8B3HIu9r8';
 // ───────────────────────────────────────────────────────────────────────────
  
 // Leer datos del estudiante desde query string
@@ -259,8 +251,7 @@ async function enviar(){
   try{
     const res = await fetch(PA_URL, {
       method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         paso: 2,
         nombreCompleto,
@@ -270,6 +261,7 @@ async function enviar(){
         firmaProfesoraJpg: firma
       })
     });
+    if(!res.ok)throw new Error('HTTP '+res.status);
     if(!res.ok)throw new Error('HTTP '+res.status);
     showState('state-ok');
   }catch(e){
